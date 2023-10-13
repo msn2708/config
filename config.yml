@@ -1,0 +1,42 @@
+corpus:
+  data_dir: "corpus"
+db_config:
+   {
+      host: localhost, 
+      user: transformers, 
+      password: supportvectors.123, 
+      database: vectordb
+   }
+logger: text-processing
+
+db_url: "postgresql+psycopg2://transformers:supportvectors.123@localhost:5432/vectordb"
+producer: {
+    'bootstrap.servers': 'localhost:9092',  # Replace with your Kafka broker(s)
+    'client.id': 'python-producer'
+   }
+consumer: {
+    'bootstrap.servers': 'localhost:9092',  # Replace with your Kafka broker(s)
+    'group.id': 'python-consumer',
+    'auto.offset.reset': 'earliest'
+}
+kafka-topic: "tp-list-files"
+kafka-embedding-topic: "tp-vector-embedding"
+write-chunks-to-queue: false
+
+embedding-producer: {
+    'bootstrap.servers': 'localhost:9092',  # Replace with your Kafka broker(s)
+    'client.id': 'embedding-producer'
+   }
+embedding-consumer: {
+    'bootstrap.servers': 'localhost:9092',  # Replace with your Kafka broker(s)
+    'group.id': 'embedding-consumer',
+    'auto.offset.reset': 'earliest'   
+}
+
+chunk_size: 500
+similarity_threshold: 0.1
+
+models:
+  #embedding_model: "distilbert-base-nli-mean-tokens"
+  embedding_model: "msmarco-bert-base-dot-v5"
+  sentence_encoder: 'distiluse-base-multilingual-cased-v1'
